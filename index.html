@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Text to Speech</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<span id="title">Text to Speech</span>
+<div>language:
+<select id="select-lang">
+<option value="en-US">English</option>
+<option value="ko-KR">한국어</option>
+<option value="ja-JP">日本語</option>
+<option value="es-ES">Español</option>
+<option value="zh-Hans-CN">中文</option>
+<option value="fr-FR'">Français</option>
+<option value="it-IT">Italiano</option>
+</select>
+</div>
+<textarea id="text" style="margin: 24px 0px 0px; height: 114px; width: 267px;"></textarea>
+<div>
+<button id="btn-read">play</button>
+<button id="btn-stop">stop</button>
+</div>
+<span id="warning">Some browser does not support voice synthesis.</span>
+<span>(ex : Firefox, Internet Explore, Opera)</span>
+  <script>
+  const selectLang = document.getElementById("select-lang");
+    const text = document.getElementById("text");
+     const btnRead = document.getElementById("btn-read");
+     const stop = document.getElementById("btn-stop");     
+  function speak(text, opt_prop) {
+  if (typeof SpeechSynthesisUtterance === "undefined" || typeof window.speechSynthesis === "undefined") {
+  alert("This browser does not support voice synthesis. 이 브라우저는 음성 합성을 지원하지 않습니다.");
+  return;
+  };
+  window.speechSynthesis.cancel();
+  const prop = opt_prop;
+  const speechMsg = new SpeechSynthesisUtterance();
+  speechMsg.rate = prop.rate;
+  speechMsg.pitch = prop.pitch;
+  speechMsg.lang = prop.lang;
+  speechMsg.text = text;
+  window.speechSynthesis.speak(speechMsg) };
+     btnRead.addEventListener("click", e => {
+     speak(text.value, {
+     rate: 1,
+      pitch: 1.2,
+       lang: selectLang.options[selectLang.selectedIndex].value
+        })
+         });
+         stop.addEventListener("click", e=>{ window.speechSynthesis.cancel();}
+         );
+</script>
+<style>
+*{
+  margin-top: 1.5rem;
+padding : 0;
+   }
+body{
+display: flex;
+  flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   }
+#btn-read{
+margin-right: 1.5rem;
+border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 5px 15px;
+  font-size: 16px;
+  cursor: pointer;
+border-color: #2196F3;
+border-radius: 5px;
+  color: dodgerblue
+}
+#btn-read:hover {
+  background: #2196F3;
+  color: white;
+}
+#btn-stop{
+border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 5px 15px;
+  font-size: 16px;
+  cursor: pointer;
+border-color: #f44336;
+  color: red;
+border-radius: 5px;
+}
+#btn-stop:hover {
+  background: #f44336;
+  color: white;
+}
+#title{
+font-size: 2rem;
+}
+</style>
+</body>
+<!-- Copyright (c) 2021 by ayaysir (https://codepen.io/ayaysir/pen/pogwaQQ)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+-->
+</html>
